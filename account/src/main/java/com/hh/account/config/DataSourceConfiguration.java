@@ -2,12 +2,15 @@ package com.hh.account.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import io.seata.rm.datasource.DataSourceProxy;
+import io.seata.rm.datasource.xa.DataSourceProxyXA;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -36,7 +39,8 @@ public class DataSourceConfiguration {
     @Primary//多个数据源，指定优先使用的数据源
     @Bean
     public DataSourceProxy dataSourceProxy(DataSource dataSource) {
-        return new DataSourceProxy(dataSource);
+        return new DataSourceProxy(dataSource);//AT模式
+//        return new DataSourceProxyXA(dataSource);//XA模式
     }
 
     @Bean("jdbcTemplate")
@@ -44,5 +48,10 @@ public class DataSourceConfiguration {
     public JdbcTemplate jdbcTemplate(DataSourceProxy dataSourceProxy) {
         return new JdbcTemplate(dataSourceProxy);
     }
+
+    /*@Bean
+    public PlatformTransactionManager txManager(DataSource dataSourceProxy) {
+        return new DataSourceTransactionManager(dataSourceProxy);
+    }*/
 
 }
