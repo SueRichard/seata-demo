@@ -13,6 +13,18 @@ import org.springframework.stereotype.Service;
 public class StorageService {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;;
-    
+    private JdbcTemplate jdbcTemplate;
+    ;
+
+    /**
+     * 扣减库存
+     *
+     * @param commodityCode
+     * @param count
+     */
+    public void deduct(String commodityCode, int count) {
+        jdbcTemplate.update("update storage_tbl set count = count - ? where commodity_code = ?",
+                new Object[]{count, commodityCode});
+    }
+
 }

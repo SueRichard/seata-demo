@@ -22,6 +22,9 @@
     <modules>
         <module>eureka</module>
         <module>storage</module>
+        <module>account</module>
+        <module>order</module>
+        <module>business</module>
     </modules>
 
     <dependencies>
