@@ -30,6 +30,7 @@ public class BusinessService {
     /**
      * 减库存，下订单
      * seata AT模式
+     * 最终一致性，通过表undo_log中的roolback_info字段回滚
      * @param userId
      * @param commodityCode
      * @param orderCount
